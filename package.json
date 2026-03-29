@@ -12,6 +12,7 @@
     "@adonisjs/assembler": "^5.9.6",
     "@japa/preset-adonis": "^1.2.0",
     "@japa/runner": "^2.5.1",
+    "@types/luxon": "^3.7.1",
     "@types/proxy-addr": "^2.0.3",
     "@types/source-map-support": "^0.5.10",
     "adonis-preset-ts": "^2.1.0",
@@ -21,8 +22,13 @@
     "youch-terminal": "^2.2.3"
   },
   "dependencies": {
+    "@adonisjs/ally": "^4.1.0",
     "@adonisjs/core": "^5.9.0",
+    "@adonisjs/lucid": "^18.0.0",
     "@adonisjs/repl": "^3.1.11",
+    "luxon": "^3.7.2",
+    "mysql": "^2.18.1",
+    "mysql2": "^3.20.0",
     "proxy-addr": "^2.0.7",
     "reflect-metadata": "^0.2.2",
     "source-map-support": "^0.5.21"

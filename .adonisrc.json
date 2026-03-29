@@ -3,7 +3,8 @@
   "commands": [
     "./commands",
     "@adonisjs/core/build/commands/index.js",
-    "@adonisjs/repl/build/commands"
+    "@adonisjs/repl/build/commands",
+    "@adonisjs/lucid/build/commands"
   ],
   "exceptionHandlerNamespace": "App/Exceptions/Handler",
   "aliases": {
@@ -16,9 +17,17 @@
     "./start/routes",
     "./start/kernel"
   ],
+  "namespaces": {
+    "controllers": "App/Interfaces/Http/Controllers",
+    "middleware": "App/Interfaces/Http/Middleware",
+    "validators": "App/Interfaces/Http/Validators",
+    "models": "App/Infrastructure/Database/Models"
+  },
   "providers": [
     "./providers/AppProvider",
-    "@adonisjs/core"
+    "@adonisjs/core",
+    "@adonisjs/lucid",
+    "@adonisjs/ally"
   ],
   "aceProviders": [
     "@adonisjs/repl"
