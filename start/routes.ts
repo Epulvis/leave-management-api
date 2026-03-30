@@ -19,7 +19,20 @@
 */
 
 import Route from '@ioc:Adonis/Core/Route'
+import AuthController from 'App/Interfaces/Http/Controllers/AuthController'
 
-Route.get('/', async () => {
-  return { hello: 'world' }
-})
+Route.group(() => {
+  Route.post('/register', async (ctx) => {
+    return new AuthController().register(ctx)
+  })
+  Route.post('/login', async (ctx) => {
+    return new AuthController().login(ctx)
+  })
+  
+  // Contoh route terproteksi untuk mengetes Token
+  Route.get('/me', async ({ auth, response }) => {
+    await auth.use('api').authenticate()
+    return response.json({ user: auth.use('api').user })
+  }).middleware('auth')
+
+}).prefix('/api/v1')
