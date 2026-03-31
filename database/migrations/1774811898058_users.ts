@@ -7,7 +7,7 @@ export default class UsersSchema extends BaseSchema {
     this.schema.createTable(this.tableName, (table) => {
       table.uuid('id').primary()
       table.string('email', 100).notNullable().unique()
-      table.string('password', 100).nullable()
+      table.string('password', 133).nullable()
       table.string('full_name', 100).notNullable()
       table.enum('role', ['employee', 'admin']).defaultTo('employee')
 
