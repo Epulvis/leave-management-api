@@ -1,0 +1,35 @@
+$kind: http-example
+request:
+  url: "{{base_url}}/api/v1/oauth/:provider/callback"
+  method: GET
+  pathVariables:
+    provider: google
+response:
+  statusCode: 200
+  statusText: OK
+  headers:
+    set-cookie: google_oauth_state=eyJtZXNzYWdlIjoiIn0; Max-Age=-1; Path=/;
+      Expires=Thu, 01 Jan 1970 00:00:00 GMT; HttpOnly
+    content-length: "185"
+    content-type: application/json; charset=utf-8
+    Date: Mon, 30 Mar 2026 19:43:45 GMT
+    Connection: keep-alive
+    Keep-Alive: timeout=5
+  body:
+    type: text
+    content: >-
+      {
+        "success": true,
+        "message": "Berhasil login menggunakan google",
+        "data": {
+          "user": {
+            "id": "114721114411520096239",
+            "email": "tester.project@gmail.com",
+            "full_name": "tester",
+            "role": "employee"
+          },
+          "token": "Nw.8u5WxDYn8AV3fIcLkbWlvMpgKdVi0kirT-qnmbrKG1dh_JEJZiH7oqTc3hiw"
+        },
+        "errors": null
+      }
+order: 1000

@@ -1,0 +1,104 @@
+$kind: http-example
+name: Login Success
+description: >-
+  Authenticates an existing user and returns a Bearer token.
+
+
+  - The token is valid for **7 days**.
+
+  - Store the returned token in the `{{token}}` environment variable to
+  authenticate subsequent requests.
+
+
+  ### Request Body
+
+
+  | Field | Type | Required | Description |
+
+  |---|---|---|---|
+
+  | `email` | string | Yes | Registered email address |
+
+  | `password` | string | Yes | Account password |
+
+
+  ### Example Request
+
+
+  ```json
+
+  {
+    "email": "john.doe@example.com",
+    "password": "secret123"
+  }
+
+  ```
+
+
+  ### Example Response `200 OK`
+
+
+  ```json
+
+  {
+    "message": "Login successful",
+    "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9...",
+    "user": {
+      "id": 1,
+      "name": "John Doe",
+      "email": "john.doe@example.com",
+      "role": "employee"
+    }
+  }
+
+  ```
+
+
+  ### Error Response `401 Unauthorized`
+
+
+  ```json
+
+  {
+    "message": "Invalid credentials"
+  }
+
+  ```
+request:
+  url: "{{base_url}}/api/v1/login"
+  method: POST
+  headers:
+    - key: Content-Type
+      value: application/json
+  body:
+    type: json
+    content: |-
+      {
+
+
+
+        "email": "user3@example.com",
+        "password": "goooo123"
+
+
+
+      }
+response:
+  statusCode: 200
+  statusText: OK
+  headers:
+    - key: content-length
+      value: "244"
+    - key: content-type
+      value: application/json; charset=utf-8
+    - key: date
+      value: Wed, 01 Apr 2026 14:39:53 GMT
+    - key: connection
+      value: keep-alive
+    - key: keep-alive
+      value: timeout=5
+  body:
+    type: json
+    content: '{"success":true,"message":"Login
+      successful","data":{"user":{"id":"bfdffd73-f593-44c7-ae0c-73deb409bb2b","email":"user3@example.com","fullName":"tester"},"token":"MTM.LD88WFrb030IPYfqfvg_R0mtMZ0WWnjeffJ1RCb4rXejGnH27x_yc_Jrl23N"},"errors":null}'
+order: 588423284390117

@@ -1,0 +1,42 @@
+$kind: http-example
+description: Submit a new leave application. Employee only. Accepts
+  multipart/form-data with a file attachment (jpg/png/pdf, max 2MB).
+request:
+  url: "{{base_url}}/api/v1/leaves/apply"
+  method: POST
+  body:
+    type: formdata
+    content:
+      - type: text
+        key: start_date
+        value: 2026-08-01
+        disabled: false
+      - type: text
+        key: end_date
+        value: 2026-08-03
+        disabled: false
+      - type: text
+        key: reason
+        value: Family vacation
+        disabled: false
+      - type: file
+        key: attachment
+        src:
+          - /C:/Users/Zuhri/Downloads/Backend Technical Test.docx.pdf
+        disabled: false
+response:
+  statusCode: 201
+  statusText: Created
+  headers:
+    content-length: "461"
+    content-type: application/json; charset=utf-8
+    date: Tue, 31 Mar 2026 23:12:21 GMT
+    connection: keep-alive
+    keep-alive: timeout=5
+  body:
+    type: json
+    content: '{"success":true,"message":"Pengajuan cuti berhasil
+      dibuat.","data":{"id":2,"userId":"1c8602ec-a9da-44a0-bd6b-216261ce6588","startDate":"2026-08-01T00:00:00.000Z","endDate":"2026-08-03T00:00:00.000Z","totalDays":3,"reason":"Family
+      vacation","attachmentPath":"uploads/1774998741587_Backend Technical
+      Test.docx.pdf","status":"pending","approvedBy":null,"approvedAt":null,"createdAt":"2026-03-31T23:12:21.697Z","updatedAt":"2026-03-31T23:12:21.697Z"},"errors":null}'
+order: 1774998871932

@@ -1,0 +1,11 @@
+$kind: http-request
+description: OAuth callback handler. Receives auth code from provider, returns a
+  Bearer token.
+url: "{{base_url}}/api/v1/oauth/:provider/callback"
+method: GET
+pathVariables:
+  provider: google
+auth:
+  type: noauth
+examples: .resources/OAuth Callback.resources/examples
+order: 2000

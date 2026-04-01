@@ -4,10 +4,18 @@ import UserModel from "../Database/Models/UserModel";
 import { UserMapper } from "../Database/Mappers/UserMapper";
 import { InfrastructureError } from "App/Shared/Errors/InfrastructureError";
 import { ConflictError } from "App/Shared/Errors/ConflictError";
+import { DomainMessages, SystemMessages } from "App/Shared/Constants/ErrorDictionary";
 
 export class LucidUserRepository implements IUserRepository {
   public async findByEmail(email: string): Promise<User | null> {
     const userModel = await UserModel.findBy("email", email);
+    if (!userModel) return null;
+
+    return UserMapper.toDomain(userModel);
+  }
+
+  public async findById(id: string): Promise<User | null> {
+    const userModel = await UserModel.find(id);
     if (!userModel) return null;
 
     return UserMapper.toDomain(userModel);
@@ -29,13 +37,15 @@ export class LucidUserRepository implements IUserRepository {
       const dbError = error as any;
 
       if (dbError.code === "ER_DUP_ENTRY") {
-        throw new ConflictError("Email sudah terdaftar.");
+        
+        throw new ConflictError(DomainMessages.EMAIL_ALREADY_REGISTERED, {
+          details: DomainMessages.DOUBLE_INDENTITY
+        });
       }
 
-      throw new InfrastructureError(
-        "Gagal menyimpan data user ke database.",
-        dbError.message,
-      );
+      throw new InfrastructureError(SystemMessages.DATABASE_ERROR, {
+        details: dbError.message
+      });
     }
   }
 }

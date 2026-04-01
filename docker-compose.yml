@@ -18,18 +18,19 @@ services:
     networks:
       - leave_network
     environment:
-      - HOST=0.0.0.0
-      - PORT=3333
+      - HOST=${HOST}
+      - PORT=${PORT}
+      - CHOKIDAR_USEPOLLING=${CHOKIDAR_USEPOLLING}
 
   mysql_db:
     image: mysql:8.0
     container_name: leave_management_db
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: rootpassword
-      MYSQL_DATABASE: leave_management
-      MYSQL_USER: adonis_user
-      MYSQL_PASSWORD: adonis_password
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     ports:
       - "3306:3306"
     volumes:
@@ -41,6 +42,20 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: leave_management_pma
+    restart: always
+    ports:
+      - "8080:80"
+    environment:
+      PMA_HOST: ${PMA_HOST}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+    depends_on:
+      - mysql_db
+    networks:
+      - leave_network
 
 volumes:
   mysql_data:

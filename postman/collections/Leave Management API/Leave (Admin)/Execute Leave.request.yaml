@@ -1,0 +1,17 @@
+$kind: http-request
+description: Approve or reject a pending leave application. Admin only. Action
+  must be "approve" or "reject".
+url: "{{base_url}}/api/v1/admin/leaves/:id/execute"
+method: PATCH
+headers:
+  Content-Type: application/json
+pathVariables:
+  id: "1"
+body:
+  type: json
+  content: |-
+    {
+      "action": "approve"
+    }
+examples: .resources/Execute Leave.resources/examples
+order: 2000

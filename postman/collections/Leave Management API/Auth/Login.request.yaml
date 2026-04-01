@@ -1,0 +1,102 @@
+$kind: http-request
+description: >-
+  Authenticates an existing user and returns a Bearer token.
+
+
+  - The token is valid for **7 days**.
+
+  - Store the returned token in the `{{token}}` environment variable to
+  authenticate subsequent requests.
+
+
+  ### Request Body
+
+
+  | Field | Type | Required | Description |
+
+  |---|---|---|---|
+
+  | `email` | string | Yes | Registered email address |
+
+  | `password` | string | Yes | Account password |
+
+
+  ### Example Request
+
+
+  ```json
+
+  {
+    "email": "john.doe@example.com",
+    "password": "secret123"
+  }
+
+  ```
+
+
+  ### Example Response `200 OK`
+
+
+  ```json
+
+  {
+    "message": "Login successful",
+    "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9...",
+    "user": {
+      "id": 1,
+      "name": "John Doe",
+      "email": "john.doe@example.com",
+      "role": "employee"
+    }
+  }
+
+  ```
+
+
+  ### Error Response `401 Unauthorized`
+
+
+  ```json
+
+  {
+    "message": "Invalid credentials"
+  }
+
+  ```
+url: "{{base_url}}/api/v1/login"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: json
+  content: |-
+    {
+    //   "email": "user@example.com",
+    //   "password": "secret123"
+
+      "email": "user3@example.com",
+      "password": "goooo123"
+
+    //   "email": "samgraha.project@gmail.com",
+    //   "password": "goooo123"
+    }
+auth:
+  type: noauth
+scripts:
+  - type: afterResponse
+    code: "const response = pm.response.json();\r
+
+      \r
+
+      if (response.data && response.data.token) {\r
+
+      \    pm.environment.set(\"token\", response.data.token);\r
+
+      } else {\r
+
+      \    console.log(\"Token tidak ditemukan atau kosong\");\r
+
+      }\r\n"
+    language: text/javascript
+examples: .resources/Login.resources/examples
+order: 2000

@@ -1,0 +1,88 @@
+$kind: http-example
+description: |-
+  Registers a new user account in the system.
+
+  - The `role` field defaults to `employee` if not provided.
+      
+  - Accepted roles: `employee`, `manager`, `admin`.
+      
+  - Returns the created user object along with a Bearer token on success.
+      
+
+  ### Request Body
+
+  | Field | Type | Required | Description |
+  | --- | --- | --- | --- |
+  | `name` | string | Yes | Full name of the user |
+  | `email` | string | Yes | Unique email address |
+  | `password` | string | Yes | Minimum 8 characters |
+  | `password_confirmation` | string | Yes | Must match `password` |
+  | `role` | string | No | Defaults to `employee` |
+
+  ### Example Request
+
+  ``` json
+  {
+    "name": "John Doe",
+    "email": "john.doe@example.com",
+    "password": "secret123",
+    "password_confirmation": "secret123",
+    "role": "employee"
+  }
+
+   ```
+
+  ### Example Response `201 Created`
+
+  ``` json
+  {
+    "message": "User registered successfully",
+    "user": {
+      "id": 1,
+      "name": "John Doe",
+      "email": "john.doe@example.com",
+      "role": "employee",
+      "created_at": "2025-01-01T00:00:00.000000Z"
+    },
+    "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9..."
+  }
+
+   ```
+request:
+  url: "{{base_url}}/api/v1/register"
+  method: POST
+  headers:
+    - key: Content-Type
+      value: application/json
+  body:
+    type: json
+    content: |-
+      {
+        "email": "user3@example.com",
+        "password": "goooo123",
+        "full_name": "tester"
+
+
+
+
+      }
+response:
+  statusCode: 201
+  statusText: Created
+  headers:
+    - key: content-length
+      value: "173"
+    - key: content-type
+      value: application/json; charset=utf-8
+    - key: date
+      value: Wed, 01 Apr 2026 14:38:13 GMT
+    - key: connection
+      value: keep-alive
+    - key: keep-alive
+      value: timeout=5
+  body:
+    type: json
+    content: '{"success":true,"message":"User registered
+      successfully","data":{"id":"bfdffd73-f593-44c7-ae0c-73deb409bb2b","email":"user3@example.com","full_name":"tester"},"errors":null}'
+order: 1775054296271
+name: Register Success

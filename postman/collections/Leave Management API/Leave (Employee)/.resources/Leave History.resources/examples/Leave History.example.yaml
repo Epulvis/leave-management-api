@@ -1,0 +1,23 @@
+$kind: http-example
+description: Get the authenticated employee's own leave application history.
+request:
+  url: "{{base_url}}/api/v1/leaves/history"
+  method: GET
+response:
+  statusCode: 200
+  statusText: OK
+  headers:
+    content-length: "844"
+    content-type: application/json; charset=utf-8
+    date: Tue, 31 Mar 2026 23:15:21 GMT
+    connection: keep-alive
+    keep-alive: timeout=5
+  body:
+    type: json
+    content: '{"success":true,"message":"Berhasil mengambil riwayat
+      cuti.","data":[{"id":2,"userId":"1c8602ec-a9da-44a0-bd6b-216261ce6588","startDate":"2026-08-01T00:00:00.000Z","endDate":"2026-08-03T00:00:00.000Z","totalDays":3,"reason":"Family
+      vacation","attachmentPath":"uploads/1774998741587_Backend Technical
+      Test.docx.pdf","status":"pending","approvedBy":null,"approvedAt":null,"createdAt":"2026-03-31T23:12:21.000Z","updatedAt":"2026-03-31T23:12:21.000Z"},{"id":1,"userId":"1c8602ec-a9da-44a0-bd6b-216261ce6588","startDate":"2026-08-01T00:00:00.000Z","endDate":"2026-08-03T00:00:00.000Z","totalDays":3,"reason":"Family
+      vacation","attachmentPath":"uploads/1774996513674_Backend Technical
+      Test.docx.pdf","status":"pending","approvedBy":null,"approvedAt":null,"createdAt":"2026-03-31T22:39:16.000Z","updatedAt":"2026-03-31T22:39:16.000Z"}],"errors":null}'
+order: 1774999300345

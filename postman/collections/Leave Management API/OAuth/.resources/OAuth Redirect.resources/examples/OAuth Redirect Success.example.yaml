@@ -1,0 +1,35 @@
+$kind: http-example
+request:
+  url: "{{base_url}}/api/v1/oauth/:provider/redirect"
+  method: GET
+  pathVariables:
+    - key: provider
+      value: google
+response:
+  statusCode: 302
+  statusText: Found
+  headers:
+    - key: set-cookie
+      value: google_oauth_state=eyJtZXNzYWdlIjoiIn0; Max-Age=-1; Path=/; Expires=Thu,
+        01 Jan 1970 00:00:00 GMT; HttpOnly
+    - key: set-cookie
+      value: google_oauth_state=e%3AnXN6-RSQMAoxaKZvvX-LeZv78dH6iXGYf77mvMU75Srk2ySzpGU3TVEPytO_uvONqYWYIkwT-KqI-fiunalz2UrdrOz9ILmSaeQZzRglxnI.SlBBcWVLUGF0WmRpRURiTA.aYm8esv_NFYfEvdab0aJR8SP9dx4NNHO8Tl4OqphME0;
+        Max-Age=7200; Path=/; HttpOnly
+    - key: location
+      value: https://accounts.google.com/o/oauth2/v2/auth?redirect_uri=http%3A%2F%2Flocalhost%3A3333%2Fgoogle%2Fcallback&client_id=80919997440-a08lnrqgivfs804rqi0qr37peo2srtiv.apps.googleusercontent.com&scope=openid%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.profile&response_type=code&state=UbVHfSAA7iiwlJcNpGcHGRD_fhLXH8q_
+    - key: content-type
+      value: text/plain; charset=utf-8
+    - key: content-length
+      value: "395"
+    - key: Date
+      value: Mon, 30 Mar 2026 19:42:30 GMT
+    - key: Connection
+      value: keep-alive
+    - key: Keep-Alive
+      value: timeout=5
+  body:
+    type: text
+    content: Redirecting to
+      https://accounts.google.com/o/oauth2/v2/auth?redirect_uri=http%3A%2F%2Flocalhost%3A3333%2Fgoogle%2Fcallback&client_id=80919997440-a08lnrqgivfs804rqi0qr37peo2srtiv.apps.googleusercontent.com&scope=openid%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.profile&response_type=code&state=UbVHfSAA7iiwlJcNpGcHGRD_fhLXH8q_
+order: 1000
+name: OAuth Redirect Success

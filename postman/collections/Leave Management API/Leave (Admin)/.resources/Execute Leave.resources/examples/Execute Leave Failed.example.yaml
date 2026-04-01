@@ -1,0 +1,38 @@
+$kind: http-example
+description: Approve or reject a pending leave application. Admin only. Action
+  must be "approve" or "reject".
+request:
+  url: "{{base_url}}/api/v1/admin/leaves/:id/execute"
+  method: PATCH
+  headers:
+    - key: Content-Type
+      value: application/json
+  pathVariables:
+    - key: id
+      value: "2"
+  body:
+    type: json
+    content: |-
+      {
+        "action": "approve"
+      }
+response:
+  statusCode: 403
+  statusText: Forbidden
+  headers:
+    - key: content-length
+      value: "133"
+    - key: content-type
+      value: application/json; charset=utf-8
+    - key: date
+      value: Wed, 01 Apr 2026 15:40:16 GMT
+    - key: connection
+      value: keep-alive
+    - key: keep-alive
+      value: timeout=5
+  body:
+    type: json
+    content: '{"success":false,"message":"Akses ditolak. Hanya Admin yang dapat
+      mengeksekusi pengajuan.","data":null,"errors":{"code":"FORBIDDEN"}}'
+order: 3319437733091926
+name: Execute Leave Failed
