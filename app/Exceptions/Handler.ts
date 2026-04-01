@@ -13,19 +13,24 @@
 |
 */
 
+import Env from '@ioc:Adonis/Core/Env'
 import Logger from '@ioc:Adonis/Core/Logger'
 import HttpExceptionHandler from '@ioc:Adonis/Core/HttpExceptionHandler'
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
-import Env from '@ioc:Adonis/Core/Env'
 import { BaseError } from '../Shared/Errors/BaseError'
 import ApiResponse from '../Interfaces/Http/Responses/ApiResponse'
+import { SystemMessages, ErrorCodes } from '../Shared/Constants/ErrorDictionary'
+import { ILogger } from 'App/Domain/Services/ILogger'
+import { AdonisLogger } from 'App/Infrastructure/Logging/AdonisLogger'
+import { LogEvents } from 'App/Shared/Constants/LogEvents'
 
 export default class ExceptionHandler extends HttpExceptionHandler {
+  private customLogger: ILogger = new AdonisLogger()
+
   constructor() {
     super(Logger)
   }
 
-  // Mapper eksklusif di layer Interface
   private getHttpStatus(code: string): number {
     const statusMap: Record<string, number> = {
       'VALIDATION_ERROR': 422,
@@ -40,28 +45,68 @@ export default class ExceptionHandler extends HttpExceptionHandler {
     return statusMap[code] || 500
   }
 
-  public async handle(error: any, ctx: HttpContextContract) {
-    const { response, request } = ctx
-    const isDev = Env.get('NODE_ENV') === 'development'
+  /**
+   * REPORT LAYER: Murni untuk keperluan pencatatan Log.
+   * Tidak ada balikan (response) ke user di sini.
+  **/
+  public async report(error: any, ctx: HttpContextContract) {
+    if (!this.shouldReport(error)) {
+      return
+    }
+
+    const status = error instanceof BaseError ? this.getHttpStatus(error.code) : (error.status || 500)
+      
+    const logContext = {
+      requestId: ctx.request.id() || 'unknown',
+      userId: ctx.auth?.user?.id?.toString() ?? null,
+      method: ctx.request.method(),
+      url: ctx.request.url(),
+      status: status,
+      duration: 'failed',
+      stack: error.stack,
+      details: error.details || error.messages || error.message,
+    }
 
     if (error instanceof BaseError) {
       if (!error.isOperational) {
-        Logger.error(`[${error.code}] ${error.message}`, { details: error.details, stack: error.stack })
+        this.customLogger.fatal(LogEvents.SYSTEM_CRASH, logContext)
+      } else if (status >= 500) {
+        this.customLogger.error(LogEvents.SYSTEM_ERROR, logContext)
+      } else if (status === 401 || status === 403) {
+        this.customLogger.warn(LogEvents.SECURITY_WARN, logContext)
+      } else {
+        this.customLogger.info(LogEvents.CLIENT_ERROR, logContext)
       }
+    } else {
+      if (status >= 500) {
+        this.customLogger.fatal(LogEvents.UNHANDLED_ERROR, logContext)
+      } else {
+        this.customLogger.info(LogEvents.FRAMEWORK_ERROR, logContext)
+      }
+    }
+  }
 
-      return response.status(this.getHttpStatus(error.code)).json(
+  public async handle(error: any, ctx: HttpContextContract) {
+    const { response, request } = ctx
+    
+    const isDev = Env.get('NODE_ENV') === 'development'
+    const isProduction = Env.get('NODE_ENV') === 'production'
+
+    if (error instanceof BaseError) {
+      const status = this.getHttpStatus(error.code)
+
+      return response.status(status).json(
         ApiResponse.error(error.message, {
           code: error.code,
-          ...(isDev && error.details && { technical: error.details }),
+          ...(isProduction ? {} : { technical: error.details })
         })
       )
     }
 
-    // 2. Tangani Error Bawaan Framework AdonisJS
     if (error.code === 'E_VALIDATION_FAILURE') {
       return response.status(422).json(
-        ApiResponse.error('Validasi data gagal. Silakan periksa kembali input Anda.', {
-          code: 'VALIDATION_ERROR',
+        ApiResponse.error(SystemMessages.VALIDATION_FAILED, {
+          code: ErrorCodes.VALIDATION_ERROR,
           details: error.messages,
         })
       )
@@ -69,21 +114,18 @@ export default class ExceptionHandler extends HttpExceptionHandler {
 
     if (error.code === 'E_ROUTE_NOT_FOUND') {
       return response.status(404).json(
-        ApiResponse.error('Endpoint yang Anda tuju tidak ditemukan.', {
-          code: 'NOT_FOUND',
+        ApiResponse.error(SystemMessages.NOT_FOUND, {
+          code: ErrorCodes.NOT_FOUND,
           requested_url: request.url(),
         })
       )
     }
 
-    // 3. Fallback: Tangkap Error Tak Terduga (Mencegah SQL Leak)
-    Logger.fatal('Unexpected Error', { message: error.message, stack: error.stack })
-
     return response.status(500).json(
-      ApiResponse.error('Terjadi kesalahan internal pada server.', {
-        code: 'TECHNICAL_ERROR',
-        ...(isDev && { technical: error.message }),
-      })
+      ApiResponse.error(SystemMessages.INTERNAL_ERROR, {
+        code: ErrorCodes.SYSTEM_CRASH,
+          ...(isDev && { technical: error.message }),
+        })
     )
   }
 }

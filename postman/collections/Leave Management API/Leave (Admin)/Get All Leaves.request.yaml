@@ -1,0 +1,6 @@
+$kind: http-request
+description: Get all leave applications across all employees. Admin only.
+url: "{{base_url}}/api/v1/admin/leaves"
+method: GET
+examples: .resources/Get All Leaves.resources/examples
+order: 1000

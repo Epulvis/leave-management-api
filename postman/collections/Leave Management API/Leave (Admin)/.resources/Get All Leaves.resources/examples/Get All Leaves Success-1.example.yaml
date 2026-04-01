@@ -1,0 +1,29 @@
+$kind: http-example
+description: Get all leave applications across all employees. Admin only.
+request:
+  url: "{{base_url}}/api/v1/admin/leaves"
+  method: GET
+response:
+  statusCode: 200
+  statusText: OK
+  headers:
+    - key: content-length
+      value: "859"
+    - key: content-type
+      value: application/json; charset=utf-8
+    - key: date
+      value: Tue, 31 Mar 2026 23:22:18 GMT
+    - key: connection
+      value: keep-alive
+    - key: keep-alive
+      value: timeout=5
+  body:
+    type: json
+    content: '{"success":true,"message":"Berhasil mengambil seluruh data pengajuan
+      cuti.","data":[{"id":2,"userId":"1c8602ec-a9da-44a0-bd6b-216261ce6588","startDate":"2026-08-01T00:00:00.000Z","endDate":"2026-08-03T00:00:00.000Z","totalDays":3,"reason":"Family
+      vacation","attachmentPath":"uploads/1774998741587_Backend Technical
+      Test.docx.pdf","status":"pending","approvedBy":null,"approvedAt":null,"createdAt":"2026-03-31T23:12:21.000Z","updatedAt":"2026-03-31T23:12:21.000Z"},{"id":1,"userId":"1c8602ec-a9da-44a0-bd6b-216261ce6588","startDate":"2026-08-01T00:00:00.000Z","endDate":"2026-08-03T00:00:00.000Z","totalDays":3,"reason":"Family
+      vacation","attachmentPath":"uploads/1774996513674_Backend Technical
+      Test.docx.pdf","status":"pending","approvedBy":null,"approvedAt":null,"createdAt":"2026-03-31T22:39:16.000Z","updatedAt":"2026-03-31T22:39:16.000Z"}],"errors":null}'
+order: 1774999344732
+name: Get All Leaves Success

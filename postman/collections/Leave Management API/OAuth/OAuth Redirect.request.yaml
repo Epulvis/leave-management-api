@@ -1,0 +1,13 @@
+$kind: http-request
+description: "Redirects to the OAuth provider's authorization page. Supported:
+  google, github, linkedin."
+url: "{{base_url}}/api/v1/oauth/:provider/redirect"
+method: GET
+pathVariables:
+  provider: google
+auth:
+  type: noauth
+settings:
+  followRedirects: false
+examples: ./.resources/OAuth Redirect.resources/examples
+order: 1000

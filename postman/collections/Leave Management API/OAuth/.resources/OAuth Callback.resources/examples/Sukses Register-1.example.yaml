@@ -1,0 +1,43 @@
+$kind: http-example
+request:
+  url: "{{base_url}}/api/v1/oauth/:provider/callback"
+  method: GET
+  pathVariables:
+    - key: provider
+      value: google
+response:
+  statusCode: 500
+  statusText: Internal Server Error
+  headers:
+    - key: set-cookie
+      value: google_oauth_state=eyJtZXNzYWdlIjoiIn0; Max-Age=-1; Path=/; Expires=Thu,
+        01 Jan 1970 00:00:00 GMT; HttpOnly
+    - key: content-length
+      value: "185"
+    - key: content-type
+      value: application/json; charset=utf-8
+    - key: Date
+      value: Mon, 30 Mar 2026 19:43:45 GMT
+    - key: Connection
+      value: keep-alive
+    - key: Keep-Alive
+      value: timeout=5
+  body:
+    type: text
+    content: >-
+      {
+        "success": true,
+        "message": "Berhasil login menggunakan google",
+        "data": {
+          "user": {
+            "id": "114721114411520096239",
+            "email": "tester.project@gmail.com",
+            "full_name": "tester",
+            "role": "employee"
+          },
+          "token": "Nw.8u5WxDYn8AV3fIcLkbWlvMpgKdVi0kirT-qnmbrKG1dh_JEJZiH7oqTc3hiw"
+        },
+        "errors": null
+      }
+order: 1000
+name: Sukses Register

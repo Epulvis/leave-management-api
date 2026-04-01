@@ -1,0 +1,40 @@
+$kind: http-example
+description: Approve or reject a pending leave application. Admin only. Action
+  must be "approve" or "reject".
+request:
+  url: "{{base_url}}/api/v1/admin/leaves/:id/execute"
+  method: PATCH
+  headers:
+    - key: Content-Type
+      value: application/json
+  pathVariables:
+    - key: id
+      value: "1"
+  body:
+    type: json
+    content: |-
+      {
+        "action": "approve"
+      }
+response:
+  statusCode: 200
+  statusText: OK
+  headers:
+    - key: content-length
+      value: "546"
+    - key: content-type
+      value: application/json; charset=utf-8
+    - key: date
+      value: Wed, 01 Apr 2026 12:10:29 GMT
+    - key: connection
+      value: keep-alive
+    - key: keep-alive
+      value: timeout=5
+  body:
+    type: json
+    content: '{"success":true,"message":"Pengajuan cuti berhasil
+      disetujui.","data":{"id":5,"userId":"1c8602ec-a9da-44a0-bd6b-216261ce6588","startDate":"2026-08-01T00:00:00.000+00:00","endDate":"2026-08-03T00:00:00.000+00:00","totalDays":3,"reason":"Family
+      vacation","attachmentPath":"uploads/1774996513674_Backend Technical
+      Test.docx.pdf","status":"approved","approvedBy":"3c691858-dbc7-46ac-8d63-f87df5806b2e","approvedAt":"2026-04-01T12:10:29.078+00:00","createdAt":"2026-03-31T22:39:16.000+00:00","updatedAt":"2026-03-31T22:39:16.000+00:00"},"errors":null}'
+order: 2987507303138037
+name: Execute Leave Success

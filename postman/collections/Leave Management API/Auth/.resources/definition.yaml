@@ -1,0 +1,24 @@
+$kind: collection
+description: >-
+  ## Auth
+
+
+  Endpoints for user registration, login, and retrieving the currently
+  authenticated user's profile.
+
+
+  ### Authentication Flow
+
+
+  1. **Register** a new user account via `POST /api/v1/register`.
+
+  2. **Login** with your credentials via `POST /api/v1/login` to receive a
+  Bearer token.
+
+  3. Use the returned token in the `Authorization: Bearer {{token}}` header for
+  all subsequent requests.
+
+
+  > All requests in this folder inherit the collection-level Bearer token
+  authentication. The `Login` and `Register` endpoints do not require a token.
+order: 1000

@@ -1,0 +1,6 @@
+$kind: http-request
+description: Get the authenticated employee's own leave application history.
+url: "{{base_url}}/api/v1/leaves/history"
+method: GET
+examples: .resources/Leave History.resources/examples
+order: 2000

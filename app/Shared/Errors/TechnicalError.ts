@@ -1,12 +1,12 @@
 import { BaseError, ErrorDetails } from './BaseError'
 
 export class TechnicalError extends BaseError {
-  constructor(technical?: ErrorDetails) {
+  constructor(message: string, details?: ErrorDetails) {
     super(
-      'Terjadi kesalahan pada sistem.',
+      message,
       'TECHNICAL_ERROR',
-      false,
-      technical
+      true,
+      details
     )
   }
 }

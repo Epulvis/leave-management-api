@@ -1,7 +1,7 @@
-import { BaseError } from './BaseError'
+import { BaseError, ErrorDetails } from './BaseError'
 
 export class AuthorizationError extends BaseError {
-  constructor(message = 'Anda tidak memiliki akses') {
-    super(message, 'FORBIDDEN', true)
+  constructor(message: string, details: { code: string, details?: ErrorDetails }) {
+    super(message, 'FORBIDDEN', true, details)
   }
 }

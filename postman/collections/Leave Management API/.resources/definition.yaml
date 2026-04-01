@@ -1,0 +1,95 @@
+$kind: collection
+name: Leave Management API
+description: >-
+  # Leave Management API
+
+
+  The **Leave Management API** provides a RESTful interface for managing
+  employee leave requests within an organization. It supports user registration,
+  authentication, and leave lifecycle management.
+
+
+  ## Base URL
+
+
+  All endpoints are relative to the base URL configured in your environment:
+
+
+  ```
+
+  {{base_url}}
+
+   ```
+
+  > **Local:** `http://localhost:8000` 
+    
+
+  ## Authentication
+
+
+  This API uses **Bearer Token** authentication. After a successful login,
+  include the token in the `Authorization` header for all protected endpoints:
+
+
+  ```
+
+  Authorization: Bearer {{token}}
+
+   ```
+
+  The token is valid for **7 days** from the time of issuance.
+
+
+  ## Versioning
+
+
+  All endpoints are prefixed with `/api/v1/`.
+
+
+  ## Environment Variables
+
+
+  | Variable | Description |
+
+  | --- | --- |
+
+  | `{{base_url}}` | The root URL of the API server |
+
+  | `{{token}}` | Bearer token obtained after login |
+
+
+  ## Error Responses
+
+
+  All error responses follow a consistent JSON structure:
+
+
+  ``` json
+
+  {
+    "message": "A human-readable error description"
+  }
+
+   ```
+
+  | Status Code | Meaning |
+
+  | --- | --- |
+
+  | `400` | Bad Request — Invalid input or missing required fields |
+
+  | `401` | Unauthorized — Missing or invalid Bearer token |
+
+  | `403` | Forbidden — Insufficient permissions |
+
+  | `404` | Not Found — Resource does not exist |
+
+  | `422` | Unprocessable Entity — Validation errors |
+
+  | `500` | Internal Server Error |
+auth:
+  - id: 3c94f368-8bba-4c05-92f3-8e14fbb5dc97
+    type: bearer
+    name: bearer auth
+    credentials:
+      token: "{{token}}"

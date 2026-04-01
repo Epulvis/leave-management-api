@@ -1,0 +1,27 @@
+$kind: http-request
+description: Submit a new leave application. Employee only. Accepts
+  multipart/form-data with a file attachment (jpg/png/pdf, max 2MB).
+url: "{{base_url}}/api/v1/leaves/apply"
+method: POST
+body:
+  type: formdata
+  content:
+    - type: text
+      key: start_date
+      value: 2025-08-01
+      disabled: false
+    - type: text
+      key: end_date
+      value: 2025-08-03
+      disabled: false
+    - type: text
+      key: reason
+      value: Family vacation
+      disabled: false
+    - type: file
+      key: attachment
+      src:
+        - /C:/Users/Zuhri/Downloads/FR0086.pdf
+      disabled: false
+examples: .resources/Apply Leave.resources/examples
+order: 1000
